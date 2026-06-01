@@ -1,0 +1,184 @@
+package com.bni.sifipdemo.ui.login
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.bni.sifipdemo.data.mock.MockScenario
+import com.bni.sifipdemo.data.mock.SifipApi
+import com.bni.sifipdemo.data.mock.SifipMockService
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+/** Status of a single SIFIP check shown in the login flow. */
+enum class CheckStatus { Idle, Running, Ok, Failed }
+
+data class CheckState(
+    val name: String,
+    val description: String,
+    val status: CheckStatus = CheckStatus.Idle,
+    val resultMessage: String? = null,
+)
+
+enum class LoginPhase { Idle, Running, Success, Failure }
+
+data class LoginUiState(
+    val phoneNumber: String = "+225 07 12 34 56 78",
+    val phase: LoginPhase = LoginPhase.Idle,
+    val numberVerify: CheckState = CheckState(
+        name = "Vérification réseau mobile",
+        description = "Contrôle opérateur du numéro",
+    ),
+    val simSwap: CheckState = CheckState(
+        name = "Vérification ligne mobile",
+        description = "Détection d'un changement SIM récent",
+    ),
+    val deviceSwap: CheckState = CheckState(
+        name = "Vérification Smartphone",
+        description = "Reconnaissance de l'appareil habituel",
+    ),
+    val authorization: CheckState = CheckState(
+        name = "Autorisation",
+        description = "Validation finale par SIFIP",
+    ),
+    val scenario: MockScenario = MockScenario.ALL_OK,
+)
+
+class LoginViewModel(
+    private val sifipApi: SifipApi,
+    /** Optional reference to the mock service: lets the UI flip scenarios live. */
+    private val mockService: SifipMockService? = null,
+) : ViewModel() {
+
+    private val _state = MutableStateFlow(
+        LoginUiState(scenario = mockService?.scenario?.value ?: MockScenario.ALL_OK)
+    )
+    val state: StateFlow<LoginUiState> = _state.asStateFlow()
+
+    fun onPhoneChanged(phone: String) {
+        _state.update { it.copy(phoneNumber = phone) }
+    }
+
+    fun setScenario(scenario: MockScenario) {
+        mockService?.setScenario(scenario)
+        _state.update { it.copy(scenario = scenario) }
+    }
+
+    fun reset() {
+        _state.update {
+            LoginUiState(
+                phoneNumber = it.phoneNumber,
+                scenario = it.scenario,
+            )
+        }
+    }
+
+    fun login(onSuccess: () -> Unit) {
+        if (_state.value.phase == LoginPhase.Running) return
+
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    phase = LoginPhase.Running,
+                    numberVerify = it.numberVerify.copy(
+                        status = CheckStatus.Running,
+                        resultMessage = null,
+                    ),
+                    simSwap = it.simSwap.copy(
+                        status = CheckStatus.Idle,
+                        resultMessage = null,
+                    ),
+                    deviceSwap = it.deviceSwap.copy(
+                        status = CheckStatus.Idle,
+                        resultMessage = null,
+                    ),
+                    authorization = it.authorization.copy(
+                        status = CheckStatus.Idle,
+                        resultMessage = null,
+                    ),
+                )
+            }
+
+            // 1) Number Verify
+            val phone = _state.value.phoneNumber
+            val nv = sifipApi.verifyNumber(phone)
+            _state.update {
+                it.copy(
+                    numberVerify = it.numberVerify.copy(
+                        status = if (nv.verified) CheckStatus.Ok else CheckStatus.Failed,
+                        resultMessage = nv.message,
+                    ),
+                    simSwap = if (nv.verified) {
+                        it.simSwap.copy(status = CheckStatus.Running)
+                    } else {
+                        it.simSwap
+                    },
+                )
+            }
+            if (!nv.verified) {
+                _state.update { it.copy(phase = LoginPhase.Failure) }
+                return@launch
+            }
+
+            // 2) SIM Swap
+            val ss = sifipApi.checkSimSwap(phone)
+            _state.update {
+                it.copy(
+                    simSwap = it.simSwap.copy(
+                        status = if (!ss.swapped) CheckStatus.Ok else CheckStatus.Failed,
+                        resultMessage = ss.message,
+                    ),
+                    deviceSwap = if (!ss.swapped) {
+                        it.deviceSwap.copy(status = CheckStatus.Running)
+                    } else {
+                        it.deviceSwap
+                    },
+                )
+            }
+            if (ss.swapped) {
+                _state.update { it.copy(phase = LoginPhase.Failure) }
+                return@launch
+            }
+
+            // 3) Device Swap
+            val ds = sifipApi.checkDeviceSwap(phone, deviceId = DEMO_DEVICE_ID)
+            _state.update {
+                it.copy(
+                    deviceSwap = it.deviceSwap.copy(
+                        status = if (ds.knownDevice) CheckStatus.Ok else CheckStatus.Failed,
+                        resultMessage = ds.message,
+                    ),
+                )
+            }
+            if (!ds.knownDevice) {
+                _state.update { it.copy(phase = LoginPhase.Failure) }
+                return@launch
+            }
+
+            // 4) Final SIFIP authorization — granted only if the 3 prior checks pass.
+            _state.update {
+                it.copy(
+                    authorization = it.authorization.copy(status = CheckStatus.Running),
+                )
+            }
+            delay(AUTHORIZATION_LATENCY_MS)
+            _state.update {
+                it.copy(
+                    authorization = it.authorization.copy(
+                        status = CheckStatus.Ok,
+                        resultMessage = "Autorisation valide — accès sécurisé accordé",
+                    ),
+                    phase = LoginPhase.Success,
+                )
+            }
+            onSuccess()
+        }
+    }
+
+    private companion object {
+        const val DEMO_DEVICE_ID = "samsung-galaxy-DEMO-CI-A1B2C3"
+        const val AUTHORIZATION_LATENCY_MS = 350L
+    }
+}

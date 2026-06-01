@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- BNI brand palette (navy + gold accent) -->
+    <color name="bni_navy">#1A3668</color>
+    <color name="bni_navy_dark">#0E1F45</color>
+    <color name="bni_gold">#F2B544</color>
+    <color name="bni_gold_dark">#C99524</color>
+    <color name="bni_white">#FFFFFF</color>
+
+    <color name="status_ok">#2E7D32</color>
+    <color name="status_warn">#F2B544</color>
+    <color name="status_error">#C62828</color>
+</resources>

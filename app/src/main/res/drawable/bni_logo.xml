@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Placeholder wordmark (generic typography on BNI navy + gold).
+    Replace this file with the official BNI Côte d'Ivoire logo
+    received from the bank's communication team before any external
+    distribution.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="96dp"
+    android:viewportWidth="240"
+    android:viewportHeight="96">
+
+    <path
+        android:pathData="M0,16 L240,16 L240,80 L0,80 Z"
+        android:fillColor="#1A3668" />
+
+    <path
+        android:pathData="M0,76 L240,76 L240,80 L0,80 Z"
+        android:fillColor="#F2B544" />
+
+    <!-- B -->
+    <path
+        android:pathData="M30,32 L30,68 L48,68 C56,68 60,64 60,58 C60,54 57,51 53,50 C56,49 58,46 58,42 C58,36 54,32 46,32 Z M38,38 L46,38 C49,38 51,40 51,43 C51,46 49,48 46,48 L38,48 Z M38,54 L48,54 C51,54 53,56 53,59 C53,62 51,64 48,64 L38,64 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- N -->
+    <path
+        android:pathData="M70,32 L78,32 L92,56 L92,32 L100,32 L100,68 L92,68 L78,44 L78,68 L70,68 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- I -->
+    <path
+        android:pathData="M110,32 L118,32 L118,68 L110,68 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Separator dot -->
+    <path
+        android:pathData="M134,50 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"
+        android:fillColor="#F2B544" />
+
+    <!-- C -->
+    <path
+        android:pathData="M162,30 C170,30 175,34 177,40 L170,42 C169,39 166,37 162,37 C156,37 153,42 153,50 C153,58 156,63 162,63 C166,63 169,61 170,58 L177,60 C175,66 170,70 162,70 C152,70 145,62 145,50 C145,38 152,30 162,30 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- I -->
+    <path
+        android:pathData="M186,32 L194,32 L194,68 L186,68 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Accent rectangle -->
+    <path
+        android:pathData="M210,38 L228,38 L228,42 L210,42 Z"
+        android:fillColor="#F2B544" />
+    <path
+        android:pathData="M210,46 L228,46 L228,50 L210,50 Z"
+        android:fillColor="#FFFFFF" />
+    <path
+        android:pathData="M210,54 L228,54 L228,58 L210,58 Z"
+        android:fillColor="#F2B544" />
+</vector>
