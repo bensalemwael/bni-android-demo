@@ -21,12 +21,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bni.sifipdemo.ui.components.BniLogo
 import com.bni.sifipdemo.ui.theme.BniTeal
+import com.bni.sifipdemo.ui.theme.BniTealDark
+import com.bni.sifipdemo.ui.theme.BniTealDeep
 import kotlinx.coroutines.delay
 
 @Composable
@@ -41,7 +44,11 @@ fun SplashScreen(onTimeout: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(BniTeal),
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(BniTeal, BniTealDark, BniTealDeep),
+                ),
+            ),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -53,17 +60,23 @@ fun SplashScreen(onTimeout: () -> Unit) {
                 width = 240.dp,
                 height = 80.dp,
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(28.dp))
             Text(
                 text = "MADAGASCAR",
                 color = Color.White,
-                fontSize = 13.sp,
+                fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
-                letterSpacing = 3.sp,
+                letterSpacing = 4.sp,
             )
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Banque numérique sécurisée",
+                color = Color.White.copy(alpha = 0.7f),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            Spacer(modifier = Modifier.height(56.dp))
             CircularProgressIndicator(
-                modifier = Modifier.size(26.dp),
+                modifier = Modifier.size(28.dp),
                 color = Color.White,
                 strokeWidth = 2.dp,
             )
@@ -71,7 +84,7 @@ fun SplashScreen(onTimeout: () -> Unit) {
 
         Text(
             text = "Sécurisé par SIFIP",
-            color = Color.White.copy(alpha = 0.7f),
+            color = Color.White.copy(alpha = 0.55f),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .align(Alignment.BottomCenter)

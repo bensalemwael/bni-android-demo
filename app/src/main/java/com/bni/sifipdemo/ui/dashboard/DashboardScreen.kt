@@ -1,7 +1,6 @@
 package com.bni.sifipdemo.ui.dashboard
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,21 +17,18 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBalanceWallet
-import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.NorthEast
-import androidx.compose.material.icons.filled.Payments
-import androidx.compose.material.icons.filled.People
-import androidx.compose.material.icons.filled.PersonOutline
-import androidx.compose.material.icons.filled.PointOfSale
+import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material.icons.filled.PowerSettingsNew
+import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.Receipt
+import androidx.compose.material.icons.filled.Savings
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.SouthWest
 import androidx.compose.material.icons.filled.SwapHoriz
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material.icons.filled.Wallet
+import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -48,22 +44,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bni.sifipdemo.data.model.Transaction
-import com.bni.sifipdemo.ui.components.ActionTile
-import com.bni.sifipdemo.ui.components.BniBottomNav
-import com.bni.sifipdemo.ui.components.BniTab
-import com.bni.sifipdemo.ui.components.WaveBottomShape
-import com.bni.sifipdemo.ui.theme.BniBorder
+import com.bni.sifipdemo.ui.components.BniBarAction
+import com.bni.sifipdemo.ui.components.BniBottomActionBar
+import com.bni.sifipdemo.ui.theme.BniMuted
 import com.bni.sifipdemo.ui.theme.BniTeal
 import com.bni.sifipdemo.ui.theme.BniTealDark
 import com.bni.sifipdemo.ui.theme.BniTealDeep
 import com.bni.sifipdemo.ui.theme.BniTealLight
-import com.bni.sifipdemo.ui.theme.BniMuted
 import com.bni.sifipdemo.ui.theme.BniText
 import com.bni.sifipdemo.ui.theme.StatusError
 import com.bni.sifipdemo.ui.theme.StatusOk
@@ -78,300 +72,327 @@ fun DashboardScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val account = state.account
-    var selectedTab by remember { mutableStateOf(BniTab.Accueil) }
+    var selectedAction by remember { mutableStateOf(BniBarAction.Accueil) }
 
     Scaffold(
         bottomBar = {
-            BniBottomNav(
-                selected = selectedTab,
-                onTabSelected = { selectedTab = it },
+            BniBottomActionBar(
+                selected = selectedAction,
+                onActionSelected = { action ->
+                    selectedAction = action
+                    if (action == BniBarAction.Virements) onTransferClicked()
+                },
             )
         },
-        containerColor = MaterialTheme.colorScheme.background,
+        containerColor = BniTealDeep,
     ) { padding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .verticalScroll(rememberScrollState()),
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(BniTeal, BniTealDark, BniTealDeep),
+                    ),
+                ),
         ) {
-            // En-tête vert avec vague
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(WaveBottomShape(waveDepthDp = 28f))
-                    .background(BniTeal),
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
             ) {
-                Column(modifier = Modifier.padding(bottom = 36.dp)) {
-                    HeaderTopBar(holderName = account.holder, onLogout = onLogout)
-                    WalletCard(
-                        accountSuffix = account.accountNumberMasked,
-                        balanceMga = account.balanceMga,
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    PillRow(onTransferClicked)
-                }
+                TopBar(holderName = account.holder, onLogout = onLogout)
+                Spacer(modifier = Modifier.height(16.dp))
+                QuickActionsRow(onTransferClicked = onTransferClicked)
+                Spacer(modifier = Modifier.height(20.dp))
+                BalanceCard(
+                    accountLabel = "Compte courant",
+                    balanceMga = account.balanceMga,
+                    onTransferClicked = onTransferClicked,
+                )
+                Spacer(modifier = Modifier.height(28.dp))
+                SectionTitle("Mes opérations bancaires")
+                Spacer(modifier = Modifier.height(12.dp))
+                OperationsRow(account.transactions)
+                Spacer(modifier = Modifier.height(24.dp))
             }
-
-            // Grille d'actions
-            Spacer(modifier = Modifier.height(20.dp))
-            ActionGrid(onTransferClicked = onTransferClicked)
-
-            // Transactions
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = "TRANSACTIONS RÉCENTES",
-                color = BniMuted,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.SemiBold,
-                letterSpacing = 1.5.sp,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
-            )
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                shape = RoundedCornerShape(10.dp),
-                color = MaterialTheme.colorScheme.surface,
-                shadowElevation = 1.dp,
-            ) {
-                Column {
-                    account.transactions.forEachIndexed { i, tx ->
-                        TransactionRow(tx)
-                        if (i < account.transactions.lastIndex) {
-                            HorizontalDivider(
-                                color = BniBorder,
-                                thickness = 1.dp,
-                                modifier = Modifier.padding(start = 60.dp),
-                            )
-                        }
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
 
 @Composable
-private fun HeaderTopBar(holderName: String, onLogout: () -> Unit) {
+private fun TopBar(holderName: String, onLogout: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = "Accueil",
+                color = Color.White,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = "Bonjour, ${holderName.split(" ").firstOrNull() ?: holderName}",
+                color = Color.White.copy(alpha = 0.75f),
+                fontSize = 13.sp,
+            )
+        }
+        IconButton(onClick = {}) {
+            Icon(
+                imageVector = Icons.Filled.NotificationsNone,
+                contentDescription = "Notifications",
+                tint = Color.White,
+            )
+        }
+        Spacer(modifier = Modifier.width(4.dp))
         Box(
             modifier = Modifier
-                .size(48.dp)
+                .size(42.dp)
                 .clip(CircleShape)
                 .background(Color.White),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(
-                imageVector = Icons.Filled.PersonOutline,
-                contentDescription = null,
-                tint = BniTealDark,
-                modifier = Modifier.size(30.dp),
-            )
-        }
-        Spacer(modifier = Modifier.width(12.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = holderName.uppercase(),
-                color = Color.White,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = "Dernière visite : 27/06/2025 11:48:50",
-                color = Color.White.copy(alpha = 0.85f),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.SemiBold,
-            )
-        }
-        IconButton(onClick = onLogout) {
-            Icon(
-                imageVector = Icons.Filled.PowerSettingsNew,
-                contentDescription = "Se déconnecter",
-                tint = Color.White,
-            )
+            IconButton(onClick = onLogout) {
+                Icon(
+                    imageVector = Icons.Outlined.PersonOutline,
+                    contentDescription = "Se déconnecter",
+                    tint = BniTeal,
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun WalletCard(accountSuffix: String, balanceMga: Long) {
+private fun QuickActionsRow(onTransferClicked: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+    ) {
+        QuickAction(icon = Icons.Filled.SwapHoriz, label = "Virements", onClick = onTransferClicked)
+        QuickAction(icon = Icons.Filled.Savings, label = "Épargne", onClick = {})
+        QuickAction(icon = Icons.Filled.CreditCard, label = "Cartes", onClick = {})
+        QuickAction(icon = Icons.Filled.Receipt, label = "Factures", onClick = {})
+    }
+}
+
+@Composable
+private fun QuickAction(icon: ImageVector, label: String, onClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .width(74.dp)
+            .padding(vertical = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(56.dp)
+                .clip(CircleShape)
+                .background(Color.White),
+            contentAlignment = Alignment.Center,
+        ) {
+            IconButton(onClick = onClick, modifier = Modifier.size(56.dp)) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = label,
+                    tint = BniTeal,
+                    modifier = Modifier.size(24.dp),
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(
+            text = label,
+            color = Color.White,
+            fontSize = 11.sp,
+            fontWeight = FontWeight.Medium,
+        )
+    }
+}
+
+@Composable
+private fun BalanceCard(
+    accountLabel: String,
+    balanceMga: Long,
+    onTransferClicked: () -> Unit,
+) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(12.dp),
-        color = Color.White.copy(alpha = 0.14f),
+        shape = RoundedCornerShape(20.dp),
+        color = Color.White,
+        shadowElevation = 8.dp,
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(20.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     modifier = Modifier
-                        .size(52.dp)
+                        .size(40.dp)
                         .clip(CircleShape)
-                        .background(Color.White),
+                        .background(BniTealLight),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.AccountBalanceWallet,
+                        imageVector = Icons.Filled.Wallet,
                         contentDescription = null,
-                        tint = BniTealDark,
-                        modifier = Modifier.size(26.dp),
+                        tint = BniTeal,
+                        modifier = Modifier.size(22.dp),
                     )
                 }
-                Spacer(modifier = Modifier.width(12.dp))
-                Column {
+                Spacer(modifier = Modifier.width(10.dp))
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "COMPTE COURANT",
-                        color = Color.White,
+                        text = accountLabel,
+                        color = BniMuted,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.SemiBold,
-                        letterSpacing = 1.5.sp,
+                        letterSpacing = 1.sp,
                     )
                     Text(
-                        text = accountSuffix,
-                        color = Color.White,
-                        style = MaterialTheme.typography.titleMedium,
+                        text = "Solde disponible",
+                        color = BniText,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(12.dp))
-            HorizontalDivider(
-                color = Color.White.copy(alpha = 0.25f),
-                thickness = 1.dp,
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "MGA ${formatMga(balanceMga)}",
+                color = BniTeal,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
             )
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = "Solde disponible :",
-                    color = Color.White,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    text = "${formatMga(balanceMga)} MGA",
-                    color = Color.White,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun PillRow(onTransferClicked: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        PillButton(text = "Mes mouvements", onClick = {}, modifier = Modifier.weight(1f))
-        PillButton(text = "Mes bénéficiaires", onClick = {}, modifier = Modifier.weight(1f))
-    }
-}
-
-@Composable
-private fun PillButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Button(
-        onClick = onClick,
-        modifier = modifier.height(46.dp),
-        shape = RoundedCornerShape(24.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = BniTealDark,
-            contentColor = Color.White,
-        ),
-    ) {
-        Text(text = text, fontWeight = FontWeight.SemiBold)
-    }
-}
-
-@Composable
-private fun ActionGrid(onTransferClicked: () -> Unit) {
-    val tiles = listOf<Triple<ImageVector, String, () -> Unit>>(
-        Triple(Icons.Filled.SwapHoriz, "Mes virements", onTransferClicked),
-        Triple(Icons.Filled.Payments, "Mise à disposition de fonds", {}),
-        Triple(Icons.Filled.PointOfSale, "Retrait sans carte", {}),
-        Triple(Icons.Filled.CreditCard, "Mes cartes", {}),
-        Triple(Icons.Filled.Receipt, "Paiements de factures", {}),
-        Triple(Icons.Filled.CalendarMonth, "Prendre un RDV", {}),
-    )
-    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-        tiles.chunked(3).forEach { row ->
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                row.forEach { (icon, label, onClick) ->
-                    ActionTile(
-                        icon = icon,
-                        label = label,
-                        onClick = onClick,
-                        modifier = Modifier.weight(1f),
-                    )
-                }
-                repeat(3 - row.size) {
-                    Spacer(modifier = Modifier.weight(1f))
-                }
+                Chip(icon = Icons.Filled.Send, label = "Envoyer", onClick = onTransferClicked)
+                Chip(icon = Icons.Filled.QrCodeScanner, label = "Scan", onClick = {})
+                Chip(icon = Icons.Filled.CreditCard, label = "Carte", onClick = {})
+                Chip(icon = Icons.Filled.PowerSettingsNew, label = "Plus", onClick = {})
             }
         }
     }
 }
 
 @Composable
-private fun TransactionRow(tx: Transaction) {
-    val credit = tx.amountMga >= 0
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
+private fun Chip(icon: ImageVector, label: String, onClick: () -> Unit) {
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 14.dp),
+            .width(64.dp)
+            .padding(vertical = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
             modifier = Modifier
-                .size(36.dp)
-                .background(
-                    if (credit) BniTealLight else StatusError.copy(alpha = 0.10f),
-                    shape = CircleShape,
-                ),
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(BniTealLight),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(
-                imageVector = if (credit) Icons.Filled.SouthWest else Icons.Filled.NorthEast,
-                contentDescription = null,
-                tint = if (credit) StatusOk else StatusError,
-                modifier = Modifier.size(18.dp),
-            )
+            IconButton(onClick = onClick, modifier = Modifier.size(40.dp)) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = label,
+                    tint = BniTeal,
+                    modifier = Modifier.size(18.dp),
+                )
+            }
         }
-        Spacer(modifier = Modifier.width(12.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = tx.label,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Medium,
-                color = BniText,
-            )
-            Text(
-                text = tx.date,
-                style = MaterialTheme.typography.bodyMedium,
-                color = BniMuted,
-            )
-        }
+        Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = "${if (credit) "+" else "-"}${formatMga(kotlin.math.abs(tx.amountMga))} MGA",
-            color = if (credit) StatusOk else StatusError,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.SemiBold,
+            text = label,
+            color = BniText,
+            fontSize = 11.sp,
+            fontWeight = FontWeight.Medium,
         )
+    }
+}
+
+@Composable
+private fun SectionTitle(text: String) {
+    Text(
+        text = text,
+        color = Color.White,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.SemiBold,
+        modifier = Modifier.padding(horizontal = 20.dp),
+    )
+}
+
+@Composable
+private fun OperationsRow(transactions: List<Transaction>) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+    ) {
+        transactions.forEachIndexed { i, tx ->
+            OperationCard(tx)
+            if (i < transactions.lastIndex) {
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+        }
+    }
+}
+
+@Composable
+private fun OperationCard(tx: Transaction) {
+    val credit = tx.amountMga >= 0
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(14.dp),
+        color = Color.White,
+        shadowElevation = 2.dp,
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(CircleShape)
+                    .background(if (credit) BniTealLight else StatusError.copy(alpha = 0.10f)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = if (credit) Icons.Filled.SouthWest else Icons.Filled.NorthEast,
+                    contentDescription = null,
+                    tint = if (credit) StatusOk else StatusError,
+                    modifier = Modifier.size(18.dp),
+                )
+            }
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = tx.label,
+                    color = BniText,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    text = tx.date,
+                    color = BniMuted,
+                    fontSize = 12.sp,
+                )
+            }
+            Text(
+                text = "MGA ${formatMga(kotlin.math.abs(tx.amountMga))}",
+                color = if (credit) StatusOk else StatusError,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }
     }
 }
 
