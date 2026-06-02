@@ -50,8 +50,8 @@ import com.bni.sifipdemo.ui.components.FraudReasons
 import com.bni.sifipdemo.ui.components.WaveBottomShape
 import com.bni.sifipdemo.ui.dashboard.formatMgaPublic
 import com.bni.sifipdemo.ui.theme.BniBorder
-import com.bni.sifipdemo.ui.theme.BniGreen
-import com.bni.sifipdemo.ui.theme.BniGreenDeep
+import com.bni.sifipdemo.ui.theme.BniTeal
+import com.bni.sifipdemo.ui.theme.BniTealDeep
 import com.bni.sifipdemo.ui.theme.BniMuted
 import com.bni.sifipdemo.ui.theme.StatusError
 import com.bni.sifipdemo.ui.theme.StatusOk
@@ -76,7 +76,7 @@ fun TransferScreen(
                 .fillMaxWidth()
                 .height(140.dp)
                 .clip(WaveBottomShape(waveDepthDp = 24f))
-                .background(BniGreen),
+                .background(BniTeal),
         ) {
             Row(
                 modifier = Modifier
@@ -152,7 +152,7 @@ private fun TransferForm(
         Text(
             text = "Saisissez le virement",
             style = MaterialTheme.typography.headlineMedium,
-            color = BniGreenDeep,
+            color = BniTealDeep,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier
                 .fillMaxWidth()
@@ -171,7 +171,7 @@ private fun TransferForm(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniGreen),
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniTeal),
             )
             OutlinedTextField(
                 value = state.iban,
@@ -180,7 +180,7 @@ private fun TransferForm(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniGreen),
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniTeal),
             )
             OutlinedTextField(
                 value = state.amountText,
@@ -190,7 +190,7 @@ private fun TransferForm(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniGreen),
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniTeal),
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -212,12 +212,12 @@ private fun AnalyzingState() {
             .padding(40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        CircularProgressIndicator(color = BniGreen, strokeWidth = 3.dp)
+        CircularProgressIndicator(color = BniTeal, strokeWidth = 3.dp)
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = stringResource(R.string.transfer_analyzing),
             style = MaterialTheme.typography.titleMedium,
-            color = BniGreenDeep,
+            color = BniTealDeep,
         )
     }
 }
@@ -269,7 +269,7 @@ private fun ResultState(
                 Text(
                     text = "Montant : ${formatMgaPublic(amount)} MGA",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = BniGreenDeep.copy(alpha = 0.8f),
+                    color = BniTealDeep.copy(alpha = 0.8f),
                 )
             }
         }

@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.bni.sifipdemo.ui.theme.BniGreen
+import com.bni.sifipdemo.ui.theme.BniTeal
 import com.bni.sifipdemo.ui.theme.BniMuted
 
 enum class BniTab { Accueil, Consultations, Operations, Gestion }
@@ -63,8 +63,8 @@ fun BniBottomNav(
                 },
                 label = { Text(spec.label, style = MaterialTheme.typography.bodyMedium) },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = BniGreen,
-                    selectedTextColor = BniGreen,
+                    selectedIconColor = BniTeal,
+                    selectedTextColor = BniTeal,
                     indicatorColor = Color.Transparent,
                     unselectedIconColor = BniMuted,
                     unselectedTextColor = BniMuted,

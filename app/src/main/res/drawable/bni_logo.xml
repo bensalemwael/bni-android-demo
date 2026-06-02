@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Placeholder wordmark — typographie générique sur fond vert avec accent
-    orange. À remplacer par le logo officiel BNI Madagascar avant toute
-    diffusion externe.
+    Placeholder typographique générique : deux bandes abstraites (corail
+    + teal) suivies des lettres BNI et d'un trait représentant le mot
+    "MADAGASCAR". À remplacer par le logo officiel BNI Madagascar avant
+    toute diffusion externe.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="240dp"
@@ -10,48 +11,33 @@
     android:viewportWidth="240"
     android:viewportHeight="80">
 
-    <!-- Bloc vert principal -->
+    <!-- Bande corail (haut gauche, parallélogramme incliné) -->
     <path
-        android:pathData="M8,8 L120,8 L120,72 L8,72 Z"
-        android:fillColor="#00A551" />
+        android:pathData="M16,14 L74,8 L80,26 L22,32 Z"
+        android:fillColor="#E55D49" />
 
-    <!-- Bande orange diagonale -->
+    <!-- Bande teal (bas gauche, parallélogramme incliné, décalé) -->
     <path
-        android:pathData="M8,30 L120,12 L120,22 L8,40 Z"
-        android:fillColor="#F7941D" />
+        android:pathData="M30,42 L88,36 L94,54 L36,60 Z"
+        android:fillColor="#137287" />
 
     <!-- B -->
     <path
-        android:pathData="M28,28 L28,60 L46,60 C54,60 58,57 58,52 C58,48 55,45 51,44 C54,43 56,41 56,37 C56,32 52,28 46,28 Z M36,34 L45,34 C47,34 49,35 49,37 C49,40 47,41 45,41 L36,41 Z M36,46 L46,46 C48,46 50,48 50,51 C50,54 48,55 46,55 L36,55 Z"
-        android:fillColor="#FFFFFF" />
+        android:pathData="M112,20 L112,60 L130,60 C138,60 142,57 142,52 C142,48 139,45 135,44 C138,43 140,41 140,37 C140,32 136,20 128,20 Z M120,28 L128,28 C130,28 132,30 132,32 C132,35 130,36 128,36 L120,36 Z M120,44 L130,44 C132,44 134,46 134,49 C134,52 132,53 130,53 L120,53 Z"
+        android:fillColor="#137287" />
 
     <!-- N -->
     <path
-        android:pathData="M64,28 L72,28 L86,48 L86,28 L94,28 L94,60 L86,60 L72,40 L72,60 L64,60 Z"
-        android:fillColor="#FFFFFF" />
+        android:pathData="M150,20 L158,20 L172,44 L172,20 L180,20 L180,60 L172,60 L158,36 L158,60 L150,60 Z"
+        android:fillColor="#137287" />
 
     <!-- I -->
     <path
-        android:pathData="M100,28 L108,28 L108,60 L100,60 Z"
-        android:fillColor="#FFFFFF" />
+        android:pathData="M190,20 L198,20 L198,60 L190,60 Z"
+        android:fillColor="#137287" />
 
-    <!-- Vertical separator -->
+    <!-- "MADAGASCAR" représenté par un trait fin teal (placeholder) -->
     <path
-        android:pathData="M148,18 L150,18 L150,62 L148,62 Z"
-        android:fillColor="#F7941D" />
-
-    <!-- M -->
-    <path
-        android:pathData="M158,28 L166,28 L174,46 L182,28 L190,28 L190,60 L184,60 L184,40 L177,56 L171,56 L164,40 L164,60 L158,60 Z"
-        android:fillColor="#00A551" />
-
-    <!-- G -->
-    <path
-        android:pathData="M198,40 C198,32 204,28 212,28 C220,28 224,32 226,38 L220,40 C219,37 217,35 213,35 C209,35 206,39 206,44 C206,49 209,53 213,53 C217,53 219,51 220,48 L226,50 C224,56 220,60 213,60 C204,60 198,54 198,46 Z M213,44 L213,48 L221,48 L221,44 Z"
-        android:fillColor="#00A551" />
-
-    <!-- Red horizontal underline accent -->
-    <path
-        android:pathData="M16,70 L226,70 L226,74 L16,74 Z"
-        android:fillColor="#F7941D" />
+        android:pathData="M112,66 L222,66 L222,70 L112,70 Z"
+        android:fillColor="#137287" />
 </vector>

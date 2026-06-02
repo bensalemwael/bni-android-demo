@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- BNI brand palette (vert institutionnel + accent orange) -->
-    <color name="bni_green">#00A551</color>
-    <color name="bni_green_dark">#007038</color>
-    <color name="bni_green_light">#D1EAD9</color>
-    <color name="bni_orange">#F7941D</color>
-    <color name="bni_background">#F5F6F7</color>
+    <!-- BNI Madagascar palette (teal/sarcelle + accent corail) -->
+    <color name="bni_teal">#137287</color>
+    <color name="bni_teal_dark">#0E3D4D</color>
+    <color name="bni_teal_deep">#08222E</color>
+    <color name="bni_teal_light">#B8E0E5</color>
+    <color name="bni_coral">#E55D49</color>
+    <color name="bni_coral_dark">#C24634</color>
+    <color name="bni_background">#F5F7F8</color>
     <color name="bni_white">#FFFFFF</color>
 
-    <color name="status_ok">#00A551</color>
-    <color name="status_warn">#F7941D</color>
+    <color name="status_ok">#137287</color>
+    <color name="status_warn">#E99A2A</color>
     <color name="status_error">#C8102E</color>
 </resources>

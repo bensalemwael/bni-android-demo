@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bni.sifipdemo.ui.components.BniLogo
-import com.bni.sifipdemo.ui.theme.BniGreen
+import com.bni.sifipdemo.ui.theme.BniTeal
 import kotlinx.coroutines.delay
 
 @Composable
@@ -41,7 +41,7 @@ fun SplashScreen(onTimeout: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(BniGreen),
+            .background(BniTeal),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),

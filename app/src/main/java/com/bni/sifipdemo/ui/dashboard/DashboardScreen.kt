@@ -59,10 +59,10 @@ import com.bni.sifipdemo.ui.components.BniBottomNav
 import com.bni.sifipdemo.ui.components.BniTab
 import com.bni.sifipdemo.ui.components.WaveBottomShape
 import com.bni.sifipdemo.ui.theme.BniBorder
-import com.bni.sifipdemo.ui.theme.BniGreen
-import com.bni.sifipdemo.ui.theme.BniGreenDark
-import com.bni.sifipdemo.ui.theme.BniGreenDeep
-import com.bni.sifipdemo.ui.theme.BniGreenLight
+import com.bni.sifipdemo.ui.theme.BniTeal
+import com.bni.sifipdemo.ui.theme.BniTealDark
+import com.bni.sifipdemo.ui.theme.BniTealDeep
+import com.bni.sifipdemo.ui.theme.BniTealLight
 import com.bni.sifipdemo.ui.theme.BniMuted
 import com.bni.sifipdemo.ui.theme.BniText
 import com.bni.sifipdemo.ui.theme.StatusError
@@ -100,7 +100,7 @@ fun DashboardScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(WaveBottomShape(waveDepthDp = 28f))
-                    .background(BniGreen),
+                    .background(BniTeal),
             ) {
                 Column(modifier = Modifier.padding(bottom = 36.dp)) {
                     HeaderTopBar(holderName = account.holder, onLogout = onLogout)
@@ -171,7 +171,7 @@ private fun HeaderTopBar(holderName: String, onLogout: () -> Unit) {
             Icon(
                 imageVector = Icons.Filled.PersonOutline,
                 contentDescription = null,
-                tint = BniGreenDark,
+                tint = BniTealDark,
                 modifier = Modifier.size(30.dp),
             )
         }
@@ -221,7 +221,7 @@ private fun WalletCard(accountSuffix: String, balanceMga: Long) {
                     Icon(
                         imageVector = Icons.Filled.AccountBalanceWallet,
                         contentDescription = null,
-                        tint = BniGreenDark,
+                        tint = BniTealDark,
                         modifier = Modifier.size(26.dp),
                     )
                 }
@@ -285,7 +285,7 @@ private fun PillButton(text: String, onClick: () -> Unit, modifier: Modifier = M
         modifier = modifier.height(46.dp),
         shape = RoundedCornerShape(24.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = BniGreenDark,
+            containerColor = BniTealDark,
             contentColor = Color.White,
         ),
     ) {
@@ -340,7 +340,7 @@ private fun TransactionRow(tx: Transaction) {
             modifier = Modifier
                 .size(36.dp)
                 .background(
-                    if (credit) BniGreenLight else StatusError.copy(alpha = 0.10f),
+                    if (credit) BniTealLight else StatusError.copy(alpha = 0.10f),
                     shape = CircleShape,
                 ),
             contentAlignment = Alignment.Center,

@@ -24,8 +24,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.bni.sifipdemo.ui.theme.BniGreen
-import com.bni.sifipdemo.ui.theme.BniGreenLight
+import com.bni.sifipdemo.ui.theme.BniTeal
+import com.bni.sifipdemo.ui.theme.BniTealLight
 import com.bni.sifipdemo.ui.theme.BniText
 
 /**
@@ -59,13 +59,13 @@ fun ActionTile(
                 modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape)
-                    .background(BniGreenLight),
+                    .background(BniTealLight),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = label,
-                    tint = BniGreen,
+                    tint = BniTeal,
                     modifier = Modifier.size(22.dp),
                 )
             }

@@ -48,8 +48,8 @@ import com.bni.sifipdemo.ui.components.BniSecondaryButton
 import com.bni.sifipdemo.ui.components.CheckStepRow
 import com.bni.sifipdemo.ui.components.WaveBottomShape
 import com.bni.sifipdemo.ui.theme.BniBorder
-import com.bni.sifipdemo.ui.theme.BniGreen
-import com.bni.sifipdemo.ui.theme.BniGreenDeep
+import com.bni.sifipdemo.ui.theme.BniTeal
+import com.bni.sifipdemo.ui.theme.BniTealDeep
 import com.bni.sifipdemo.ui.theme.BniMuted
 import com.bni.sifipdemo.ui.theme.StatusError
 
@@ -73,7 +73,7 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .height(200.dp)
                 .clip(WaveBottomShape(waveDepthDp = 24f))
-                .background(BniGreen),
+                .background(BniTeal),
         ) {
             Row(
                 modifier = Modifier
@@ -99,7 +99,7 @@ fun LoginScreen(
         Text(
             text = "Entrez votre identifiant",
             style = MaterialTheme.typography.headlineMedium,
-            color = BniGreenDeep,
+            color = BniTealDeep,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier
                 .fillMaxWidth()
@@ -116,7 +116,7 @@ fun LoginScreen(
                 Icon(
                     imageVector = Icons.Filled.PersonOutline,
                     contentDescription = null,
-                    tint = BniGreen,
+                    tint = BniTeal,
                 )
             },
             enabled = state.phase != LoginPhase.Running,
@@ -126,7 +126,7 @@ fun LoginScreen(
                 .padding(horizontal = 20.dp),
             shape = RoundedCornerShape(8.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = BniGreen,
+                focusedBorderColor = BniTeal,
             ),
         )
 
