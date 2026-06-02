@@ -1,62 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Placeholder wordmark (generic typography on BNI navy + gold).
-    Replace this file with the official BNI Côte d'Ivoire logo
-    received from the bank's communication team before any external
-    distribution.
+    Placeholder wordmark (generic typography on navy + red accent).
+    Replace this file with the official BNI Côte d'Ivoire logo before any
+    external distribution.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="240dp"
-    android:height="96dp"
+    android:height="80dp"
     android:viewportWidth="240"
-    android:viewportHeight="96">
-
-    <path
-        android:pathData="M0,16 L240,16 L240,80 L0,80 Z"
-        android:fillColor="#1A3668" />
-
-    <path
-        android:pathData="M0,76 L240,76 L240,80 L0,80 Z"
-        android:fillColor="#F2B544" />
+    android:viewportHeight="80">
 
     <!-- B -->
     <path
-        android:pathData="M30,32 L30,68 L48,68 C56,68 60,64 60,58 C60,54 57,51 53,50 C56,49 58,46 58,42 C58,36 54,32 46,32 Z M38,38 L46,38 C49,38 51,40 51,43 C51,46 49,48 46,48 L38,48 Z M38,54 L48,54 C51,54 53,56 53,59 C53,62 51,64 48,64 L38,64 Z"
-        android:fillColor="#FFFFFF" />
+        android:pathData="M16,16 L16,64 L42,64 C54,64 60,58 60,50 C60,44 56,40 50,38 C55,36 58,32 58,26 C58,20 53,16 42,16 Z M28,24 L41,24 C45,24 48,26 48,30 C48,34 45,36 41,36 L28,36 Z M28,42 L43,42 C47,42 50,44 50,48 C50,52 47,54 43,54 L28,54 Z"
+        android:fillColor="#0F2A55" />
 
     <!-- N -->
     <path
-        android:pathData="M70,32 L78,32 L92,56 L92,32 L100,32 L100,68 L92,68 L78,44 L78,68 L70,68 Z"
-        android:fillColor="#FFFFFF" />
+        android:pathData="M70,16 L82,16 L102,48 L102,16 L114,16 L114,64 L102,64 L82,32 L82,64 L70,64 Z"
+        android:fillColor="#0F2A55" />
 
     <!-- I -->
     <path
-        android:pathData="M110,32 L118,32 L118,68 L110,68 Z"
-        android:fillColor="#FFFFFF" />
+        android:pathData="M124,16 L136,16 L136,64 L124,64 Z"
+        android:fillColor="#0F2A55" />
 
-    <!-- Separator dot -->
+    <!-- Vertical separator -->
     <path
-        android:pathData="M134,50 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"
-        android:fillColor="#F2B544" />
+        android:pathData="M148,18 L150,18 L150,62 L148,62 Z"
+        android:fillColor="#C8102E" />
 
-    <!-- C -->
+    <!-- C I (Côte d'Ivoire identifier) — smaller mark -->
     <path
-        android:pathData="M162,30 C170,30 175,34 177,40 L170,42 C169,39 166,37 162,37 C156,37 153,42 153,50 C153,58 156,63 162,63 C166,63 169,61 170,58 L177,60 C175,66 170,70 162,70 C152,70 145,62 145,50 C145,38 152,30 162,30 Z"
-        android:fillColor="#FFFFFF" />
+        android:pathData="M162,28 C170,28 174,32 175,38 L168,40 C167,37 165,36 162,36 C157,36 155,40 155,45 C155,50 157,54 162,54 C165,54 167,53 168,50 L175,52 C174,58 170,62 162,62 C153,62 147,55 147,45 C147,35 153,28 162,28 Z"
+        android:fillColor="#0F2A55" />
 
-    <!-- I -->
     <path
-        android:pathData="M186,32 L194,32 L194,68 L186,68 Z"
-        android:fillColor="#FFFFFF" />
+        android:pathData="M182,28 L190,28 L190,62 L182,62 Z"
+        android:fillColor="#0F2A55" />
 
-    <!-- Accent rectangle -->
+    <!-- Red horizontal underline accent -->
     <path
-        android:pathData="M210,38 L228,38 L228,42 L210,42 Z"
-        android:fillColor="#F2B544" />
-    <path
-        android:pathData="M210,46 L228,46 L228,50 L210,50 Z"
-        android:fillColor="#FFFFFF" />
-    <path
-        android:pathData="M210,54 L228,54 L228,58 L210,58 Z"
-        android:fillColor="#F2B544" />
+        android:pathData="M16,70 L190,70 L190,74 L16,74 Z"
+        android:fillColor="#C8102E" />
 </vector>

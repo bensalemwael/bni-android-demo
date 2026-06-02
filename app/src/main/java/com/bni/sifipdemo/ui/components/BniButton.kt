@@ -18,6 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+/**
+ * Boutons institutionnels : coins peu arrondis (4 dp) pour un registre
+ * banque classique, pas fintech. Aucune ombre — surface plate.
+ */
 @Composable
 fun BniPrimaryButton(
     text: String,
@@ -31,8 +35,8 @@ fun BniPrimaryButton(
         enabled = enabled && !loading,
         modifier = modifier
             .fillMaxWidth()
-            .height(56.dp),
-        shape = RoundedCornerShape(14.dp),
+            .height(52.dp),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = Color.White,
@@ -47,7 +51,7 @@ fun BniPrimaryButton(
                 )
             } else {
                 Text(
-                    text = text,
+                    text = text.uppercase(),
                     style = MaterialTheme.typography.labelLarge,
                 )
             }
@@ -67,12 +71,12 @@ fun BniSecondaryButton(
         enabled = enabled,
         modifier = modifier
             .fillMaxWidth()
-            .height(52.dp),
-        shape = RoundedCornerShape(14.dp),
+            .height(48.dp),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = MaterialTheme.colorScheme.primary,
         ),
     ) {
-        Text(text = text, style = MaterialTheme.typography.labelLarge)
+        Text(text = text.uppercase(), style = MaterialTheme.typography.labelLarge)
     }
 }

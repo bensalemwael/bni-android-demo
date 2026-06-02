@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- BNI brand palette (navy + gold accent) -->
-    <color name="bni_navy">#1A3668</color>
-    <color name="bni_navy_dark">#0E1F45</color>
-    <color name="bni_gold">#F2B544</color>
-    <color name="bni_gold_dark">#C99524</color>
+    <!-- BNI brand palette (navy institutionnel + accent rouge) -->
+    <color name="bni_navy">#0F2A55</color>
+    <color name="bni_navy_dark">#081B3B</color>
+    <color name="bni_red">#C8102E</color>
+    <color name="bni_red_dark">#9D0C24</color>
+    <color name="bni_background">#F5F6F8</color>
     <color name="bni_white">#FFFFFF</color>
 
-    <color name="status_ok">#2E7D32</color>
-    <color name="status_warn">#F2B544</color>
-    <color name="status_error">#C62828</color>
+    <color name="status_ok">#1F7A3A</color>
+    <color name="status_warn">#D68A11</color>
+    <color name="status_error">#C8102E</color>
 </resources>

@@ -11,18 +11,19 @@ private val BniLightColorScheme = lightColorScheme(
     onPrimary = Color.White,
     primaryContainer = BniNavyLight,
     onPrimaryContainer = Color.White,
-    secondary = BniGold,
-    onSecondary = BniNavyDark,
+    secondary = BniRed,
+    onSecondary = Color.White,
     secondaryContainer = BniSand,
     onSecondaryContainer = BniNavyDark,
-    tertiary = BniGoldDark,
+    tertiary = BniRedDark,
     onTertiary = Color.White,
-    background = BniSurface,
-    onBackground = BniNavyDark,
+    background = BniBackground,
+    onBackground = BniText,
     surface = Color.White,
-    onSurface = BniNavyDark,
-    surfaceVariant = BniSurface,
+    onSurface = BniText,
+    surfaceVariant = BniBackground,
     onSurfaceVariant = BniNavy,
+    outline = BniBorder,
     error = StatusError,
     onError = Color.White,
 )
@@ -32,8 +33,6 @@ fun BniTheme(
     @Suppress("UNUSED_PARAMETER") darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    // BNI demo: corporate light scheme — keeps branding consistent in front
-    // of the bank's stakeholders.
     MaterialTheme(
         colorScheme = BniLightColorScheme,
         typography = BniTypography,

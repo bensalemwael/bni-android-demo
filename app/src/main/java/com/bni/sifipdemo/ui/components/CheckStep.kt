@@ -14,14 +14,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,69 +31,78 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bni.sifipdemo.ui.login.CheckState
 import com.bni.sifipdemo.ui.login.CheckStatus
+import com.bni.sifipdemo.ui.theme.BniBorder
+import com.bni.sifipdemo.ui.theme.BniMuted
 import com.bni.sifipdemo.ui.theme.StatusError
 import com.bni.sifipdemo.ui.theme.StatusOk
 
+/**
+ * Flat row with a thin bottom divider — registre liste bancaire classique.
+ * Pas d'ombres, pas de cartes, pas de coins arrondis : ressemble à une
+ * ligne de tableau institutionnel.
+ */
 @Composable
 fun CheckStepRow(
     check: CheckState,
+    showDivider: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
-    Surface(
-        modifier = modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(14.dp),
-        tonalElevation = 0.dp,
+    Column(
+        modifier = modifier
+            .fillMaxWidth(),
     ) {
-        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                StatusIndicator(check.status)
-                Spacer(modifier = Modifier.width(14.dp))
-                Column(modifier = Modifier.weight(1f)) {
+        Row(
+            verticalAlignment = Alignment.Top,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+        ) {
+            StatusIndicator(check.status)
+            Spacer(modifier = Modifier.width(14.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = check.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    text = check.description,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = BniMuted,
+                )
+                AnimatedVisibility(
+                    visible = check.resultMessage != null,
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                ) {
                     Text(
-                        text = check.name,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
-                    Text(
-                        text = check.description,
+                        text = check.resultMessage.orEmpty(),
+                        modifier = Modifier.padding(top = 4.dp),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                        color = when (check.status) {
+                            CheckStatus.Ok -> StatusOk
+                            CheckStatus.Failed -> StatusError
+                            else -> BniMuted
+                        },
                     )
                 }
             }
-            AnimatedVisibility(
-                visible = check.resultMessage != null,
-                enter = fadeIn(),
-                exit = fadeOut(),
-            ) {
-                val message = check.resultMessage.orEmpty()
-                Text(
-                    text = message,
-                    modifier = Modifier.padding(start = 38.dp, top = 6.dp),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = when (check.status) {
-                        CheckStatus.Ok -> StatusOk
-                        CheckStatus.Failed -> StatusError
-                        else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-                    },
-                )
-            }
+        }
+        if (showDivider) {
+            HorizontalDivider(color = BniBorder, thickness = 1.dp)
         }
     }
 }
 
 @Composable
 private fun StatusIndicator(status: CheckStatus) {
-    val size = 24.dp
+    val size = 22.dp
     when (status) {
         CheckStatus.Idle -> {
             Box(
                 modifier = Modifier
                     .size(size)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)),
+                    .background(BniBorder),
             )
         }
         CheckStatus.Running -> {
@@ -116,7 +124,7 @@ private fun StatusIndicator(status: CheckStatus) {
                     imageVector = Icons.Filled.Check,
                     contentDescription = "OK",
                     tint = Color.White,
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(14.dp),
                 )
             }
         }
@@ -132,7 +140,7 @@ private fun StatusIndicator(status: CheckStatus) {
                     imageVector = Icons.Filled.Close,
                     contentDescription = "Échec",
                     tint = Color.White,
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(14.dp),
                 )
             }
         }

@@ -1,10 +1,10 @@
 package com.bni.sifipdemo.ui.login
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,19 +34,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bni.sifipdemo.R
 import com.bni.sifipdemo.data.mock.MockScenario
 import com.bni.sifipdemo.ui.components.BniLogo
 import com.bni.sifipdemo.ui.components.BniPrimaryButton
 import com.bni.sifipdemo.ui.components.BniSecondaryButton
 import com.bni.sifipdemo.ui.components.CheckStepRow
+import com.bni.sifipdemo.ui.theme.BniBorder
+import com.bni.sifipdemo.ui.theme.BniMuted
 import com.bni.sifipdemo.ui.theme.BniNavy
-import com.bni.sifipdemo.ui.theme.BniNavyDark
+import com.bni.sifipdemo.ui.theme.BniRed
 import com.bni.sifipdemo.ui.theme.StatusError
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,60 +59,61 @@ fun LoginScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background)
+            .verticalScroll(rememberScrollState()),
     ) {
-        // Branded header
+        // Bandeau institutionnel : trait rouge fin + navy uni
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(240.dp)
-                .background(Brush.verticalGradient(listOf(BniNavy, BniNavyDark))),
+                .height(4.dp)
+                .background(BniRed),
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(BniNavy),
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(24.dp)
-                    .padding(top = 24.dp),
-                horizontalAlignment = Alignment.Start,
-            ) {
-                ScenarioPicker(
-                    current = state.scenario,
-                    onSelected = viewModel::setScenario,
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                BniLogo(width = 180.dp, height = 64.dp)
-                Spacer(modifier = Modifier.height(16.dp))
+            Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 24.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    BniLogo(width = 180.dp, height = 56.dp)
+                    Spacer(modifier = Modifier.weight(1f))
+                    ScenarioPicker(current = state.scenario, onSelected = viewModel::setScenario)
+                }
+                Spacer(modifier = Modifier.height(20.dp))
                 Text(
-                    text = stringResource(R.string.login_welcome),
+                    text = "ESPACE CLIENT SÉCURISÉ",
                     color = Color.White,
-                    style = MaterialTheme.typography.headlineMedium,
+                    fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold,
+                    letterSpacing = 2.sp,
                 )
+                Spacer(modifier = Modifier.height(6.dp))
                 Text(
                     text = stringResource(R.string.login_subtitle),
-                    color = Color.White.copy(alpha = 0.8f),
-                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.White.copy(alpha = 0.75f),
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             }
         }
 
-        // Card
+        // Section blanche plate (pas de carte flottante)
         Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(top = 200.dp)
-                .verticalScroll(rememberScrollState()),
-            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.surface,
-            shadowElevation = 6.dp,
         ) {
-            Column(
-                modifier = Modifier.padding(20.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
+            Column(modifier = Modifier.padding(vertical = 24.dp)) {
+                Text(
+                    text = "Identification",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    color = BniNavy,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
+                )
+
                 OutlinedTextField(
                     value = state.phoneNumber,
                     onValueChange = viewModel::onPhoneChanged,
@@ -117,42 +121,59 @@ fun LoginScreen(
                     placeholder = { Text(stringResource(R.string.login_phone_hint)) },
                     enabled = state.phase != LoginPhase.Running,
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 8.dp),
+                    shape = RoundedCornerShape(4.dp),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = BniNavy,
                     ),
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "CONTRÔLES DE SÉCURITÉ SIFIP",
+                    color = BniMuted,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    letterSpacing = 1.5.sp,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
+                )
+                HorizontalDivider(color = BniBorder, thickness = 1.dp)
 
                 CheckStepRow(check = state.numberVerify)
                 CheckStepRow(check = state.simSwap)
                 CheckStepRow(check = state.deviceSwap)
-                CheckStepRow(check = state.authorization)
+                CheckStepRow(check = state.authorization, showDivider = false)
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(24.dp))
 
-                when (state.phase) {
-                    LoginPhase.Failure -> {
-                        Text(
-                            text = "Connexion bloquée par le contrôle SIFIP.",
-                            color = StatusError,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                        BniSecondaryButton(
-                            text = stringResource(R.string.login_retry),
-                            onClick = viewModel::reset,
-                        )
-                    }
-                    else -> {
-                        BniPrimaryButton(
-                            text = stringResource(R.string.login_button),
-                            onClick = { viewModel.login(onAuthenticated) },
-                            loading = state.phase == LoginPhase.Running,
-                        )
+                Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+                    when (state.phase) {
+                        LoginPhase.Failure -> {
+                            Text(
+                                text = "Connexion bloquée par le contrôle SIFIP.",
+                                color = StatusError,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.padding(bottom = 12.dp),
+                            )
+                            BniSecondaryButton(
+                                text = stringResource(R.string.login_retry),
+                                onClick = viewModel::reset,
+                            )
+                        }
+                        else -> {
+                            BniPrimaryButton(
+                                text = stringResource(R.string.login_button),
+                                onClick = { viewModel.login(onAuthenticated) },
+                                loading = state.phase == LoginPhase.Running,
+                            )
+                        }
                     }
                 }
+
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
@@ -165,27 +186,12 @@ private fun ScenarioPicker(
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box {
-        Surface(
-            color = Color.White.copy(alpha = 0.12f),
-            shape = RoundedCornerShape(20.dp),
-        ) {
-            Row(
-                modifier = Modifier.padding(start = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = "Démo : ${current.label}",
-                    color = Color.White,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-                IconButton(onClick = { expanded = true }) {
-                    Icon(
-                        imageVector = Icons.Filled.ExpandMore,
-                        contentDescription = "Changer de scénario",
-                        tint = Color.White,
-                    )
-                }
-            }
+        IconButton(onClick = { expanded = true }) {
+            Icon(
+                imageVector = Icons.Filled.ExpandMore,
+                contentDescription = "Changer de scénario : ${current.label}",
+                tint = Color.White.copy(alpha = 0.85f),
+            )
         }
         DropdownMenu(
             expanded = expanded,

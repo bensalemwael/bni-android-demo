@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,12 +22,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bni.sifipdemo.ui.components.BniLogo
 import com.bni.sifipdemo.ui.theme.BniNavy
-import com.bni.sifipdemo.ui.theme.BniNavyDark
+import com.bni.sifipdemo.ui.theme.BniRed
 import kotlinx.coroutines.delay
 
 @Composable
@@ -41,36 +43,54 @@ fun SplashScreen(onTimeout: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(listOf(BniNavy, BniNavyDark)),
-            ),
-        contentAlignment = Alignment.Center,
+            .background(BniNavy),
     ) {
+        // Bandeau rouge institutionnel haut
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(6.dp)
+                .background(BniRed)
+                .align(Alignment.TopCenter),
+        )
+
         Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 6.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
             BniLogo(
                 modifier = Modifier.alpha(logoAlpha.value),
-                width = 220.dp,
-                height = 88.dp,
+                width = 240.dp,
+                height = 80.dp,
             )
-            Spacer(modifier = Modifier.height(28.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Banque numérique sécurisée",
-                color = Color.White.copy(alpha = 0.85f),
-                style = MaterialTheme.typography.bodyLarge,
-            )
-            Spacer(modifier = Modifier.height(36.dp))
-            CircularProgressIndicator(
-                modifier = Modifier.size(28.dp),
+                text = "BANQUE NATIONALE D'INVESTISSEMENT",
                 color = Color.White,
-                strokeWidth = 2.5.dp,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                letterSpacing = 2.sp,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Côte d'Ivoire",
+                color = Color.White.copy(alpha = 0.75f),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            Spacer(modifier = Modifier.height(48.dp))
+            CircularProgressIndicator(
+                modifier = Modifier.size(26.dp),
+                color = Color.White,
+                strokeWidth = 2.dp,
             )
         }
+
         Text(
-            text = "powered by SIFIP",
-            color = Color.White.copy(alpha = 0.6f),
+            text = "Sécurisé par SIFIP",
+            color = Color.White.copy(alpha = 0.55f),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
