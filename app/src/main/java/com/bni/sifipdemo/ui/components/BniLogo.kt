@@ -6,27 +6,28 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bni.sifipdemo.R
 
 /**
- * BNI wordmark placeholder. The drawable resource is a generic vector
- * stand-in — replace `res/drawable/bni_logo.xml` by the official BNI
- * Madagascar logo (PNG / SVG) received from the bank's communication team
- * without changing any composable code.
+ * Logo BNI Madagascar. Charge `res/drawable/bni_logo.png` — fichier officiel
+ * fourni par la banque (ratio carré ≈ 1:1). ContentScale.Fit préserve les
+ * proportions quelles que soient les dimensions passées.
  */
 @Composable
 fun BniLogo(
     modifier: Modifier = Modifier,
-    width: Dp = 240.dp,
-    height: Dp = 80.dp,
+    width: Dp = 120.dp,
+    height: Dp = 120.dp,
 ) {
     Box(modifier = modifier.width(width).height(height)) {
         Image(
             painter = painterResource(id = R.drawable.bni_logo),
             contentDescription = "BNI Madagascar",
+            contentScale = ContentScale.Fit,
         )
     }
 }
