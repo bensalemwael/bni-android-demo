@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,8 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bni.sifipdemo.ui.components.BniLogo
-import com.bni.sifipdemo.ui.theme.BniNavy
-import com.bni.sifipdemo.ui.theme.BniRed
+import com.bni.sifipdemo.ui.theme.BniGreen
 import kotlinx.coroutines.delay
 
 @Composable
@@ -43,21 +41,10 @@ fun SplashScreen(onTimeout: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(BniNavy),
+            .background(BniGreen),
     ) {
-        // Bandeau rouge institutionnel haut
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(6.dp)
-                .background(BniRed)
-                .align(Alignment.TopCenter),
-        )
-
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 6.dp),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
@@ -66,19 +53,13 @@ fun SplashScreen(onTimeout: () -> Unit) {
                 width = 240.dp,
                 height = 80.dp,
             )
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             Text(
-                text = "BANQUE NATIONALE D'INVESTISSEMENT",
+                text = "CÔTE D'IVOIRE",
                 color = Color.White,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                letterSpacing = 2.sp,
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Côte d'Ivoire",
-                color = Color.White.copy(alpha = 0.75f),
-                style = MaterialTheme.typography.bodyMedium,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.SemiBold,
+                letterSpacing = 3.sp,
             )
             Spacer(modifier = Modifier.height(48.dp))
             CircularProgressIndicator(
@@ -90,7 +71,7 @@ fun SplashScreen(onTimeout: () -> Unit) {
 
         Text(
             text = "Sécurisé par SIFIP",
-            color = Color.White.copy(alpha = 0.55f),
+            color = Color.White.copy(alpha = 0.7f),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .align(Alignment.BottomCenter)

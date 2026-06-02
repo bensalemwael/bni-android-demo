@@ -20,7 +20,7 @@ import com.bni.sifipdemo.R
 @Composable
 fun BniLogo(
     modifier: Modifier = Modifier,
-    width: Dp = 200.dp,
+    width: Dp = 240.dp,
     height: Dp = 80.dp,
 ) {
     Box(modifier = modifier.width(width).height(height)) {

@@ -34,10 +34,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bni.sifipdemo.R
@@ -45,11 +47,12 @@ import com.bni.sifipdemo.ui.components.BniPrimaryButton
 import com.bni.sifipdemo.ui.components.BniSecondaryButton
 import com.bni.sifipdemo.ui.components.FraudGauge
 import com.bni.sifipdemo.ui.components.FraudReasons
+import com.bni.sifipdemo.ui.components.WaveBottomShape
 import com.bni.sifipdemo.ui.dashboard.formatXofPublic
 import com.bni.sifipdemo.ui.theme.BniBorder
+import com.bni.sifipdemo.ui.theme.BniGreen
+import com.bni.sifipdemo.ui.theme.BniGreenDeep
 import com.bni.sifipdemo.ui.theme.BniMuted
-import com.bni.sifipdemo.ui.theme.BniNavy
-import com.bni.sifipdemo.ui.theme.BniRed
 import com.bni.sifipdemo.ui.theme.StatusError
 import com.bni.sifipdemo.ui.theme.StatusOk
 
@@ -67,20 +70,18 @@ fun TransferScreen(
             .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState()),
     ) {
-        // Trait rouge + bandeau navy
+        // Bandeau vert avec vague concave en bas
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(4.dp)
-                .background(BniRed),
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(BniNavy),
+                .height(140.dp)
+                .clip(WaveBottomShape(waveDepthDp = 24f))
+                .background(BniGreen),
         ) {
             Row(
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(onClick = onBack) {
@@ -91,12 +92,14 @@ fun TransferScreen(
                     )
                 }
                 Text(
-                    text = stringResource(R.string.transfer_title).uppercase(),
+                    text = stringResource(R.string.transfer_title),
                     color = Color.White,
-                    fontSize = 14.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
-                    letterSpacing = 1.5.sp,
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center,
                 )
+                Spacer(modifier = Modifier.size(48.dp))
             }
         }
 
@@ -143,18 +146,20 @@ private fun TransferForm(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
-            .padding(vertical = 20.dp),
+            .background(Color.White),
     ) {
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "COORDONNÉES BÉNÉFICIAIRE",
-            color = BniMuted,
-            fontSize = 11.sp,
+            text = "Saisissez le virement",
+            style = MaterialTheme.typography.headlineMedium,
+            color = BniGreenDeep,
             fontWeight = FontWeight.SemiBold,
-            letterSpacing = 1.5.sp,
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+            textAlign = TextAlign.Center,
         )
-        HorizontalDivider(color = BniBorder, thickness = 1.dp)
+
         Column(
             modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
@@ -165,8 +170,8 @@ private fun TransferForm(
                 label = { Text(stringResource(R.string.transfer_recipient)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(4.dp),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniNavy),
+                shape = RoundedCornerShape(8.dp),
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniGreen),
             )
             OutlinedTextField(
                 value = state.iban,
@@ -174,21 +179,9 @@ private fun TransferForm(
                 label = { Text(stringResource(R.string.transfer_iban)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(4.dp),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniNavy),
+                shape = RoundedCornerShape(8.dp),
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniGreen),
             )
-        }
-
-        Text(
-            text = "MONTANT",
-            color = BniMuted,
-            fontSize = 11.sp,
-            fontWeight = FontWeight.SemiBold,
-            letterSpacing = 1.5.sp,
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
-        )
-        HorizontalDivider(color = BniBorder, thickness = 1.dp)
-        Column(modifier = Modifier.padding(20.dp)) {
             OutlinedTextField(
                 value = state.amountText,
                 onValueChange = onAmountChanged,
@@ -196,12 +189,13 @@ private fun TransferForm(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(4.dp),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniNavy),
+                shape = RoundedCornerShape(8.dp),
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BniGreen),
             )
-            Spacer(modifier = Modifier.height(24.dp))
+
+            Spacer(modifier = Modifier.height(8.dp))
             BniPrimaryButton(
-                text = stringResource(R.string.transfer_send),
+                text = "Valider",
                 onClick = onSubmit,
                 enabled = state.amountText.isNotBlank() && state.iban.isNotBlank(),
             )
@@ -218,12 +212,12 @@ private fun AnalyzingState() {
             .padding(40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        CircularProgressIndicator(color = BniNavy, strokeWidth = 3.dp)
+        CircularProgressIndicator(color = BniGreen, strokeWidth = 3.dp)
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = stringResource(R.string.transfer_analyzing),
             style = MaterialTheme.typography.titleMedium,
-            color = BniNavy,
+            color = BniGreenDeep,
         )
     }
 }
@@ -243,7 +237,7 @@ private fun ResultState(
             .fillMaxWidth()
             .background(Color.White),
     ) {
-        // Bandeau de résultat — couleur de statut
+        // Bandeau résultat
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -263,7 +257,7 @@ private fun ResultState(
                 tint = if (isSuccess) StatusOk else StatusError,
                 modifier = Modifier.size(28.dp),
             )
-            Spacer(modifier = Modifier.padding(end = 14.dp))
+            Spacer(modifier = Modifier.size(14.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = title.uppercase(),
@@ -273,9 +267,9 @@ private fun ResultState(
                     letterSpacing = 1.sp,
                 )
                 Text(
-                    text = "Montant : ${formatXofPublic(amount)} FCFA",
+                    text = "Montant : ${formatXofPublic(amount)} XOF",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = BniNavy.copy(alpha = 0.8f),
+                    color = BniGreenDeep.copy(alpha = 0.8f),
                 )
             }
         }
