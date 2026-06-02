@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.bni.sifipdemo.navigation.BniNavGraph
-import com.bni.sifipdemo.ui.theme.BniSurface
+import com.bni.sifipdemo.ui.theme.BniBackground
 import com.bni.sifipdemo.ui.theme.BniTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(BniSurface),
+                        .background(BniBackground),
                 ) {
                     BniNavGraph()
                 }
