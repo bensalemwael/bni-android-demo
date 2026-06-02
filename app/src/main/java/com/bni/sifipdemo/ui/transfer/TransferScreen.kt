@@ -48,7 +48,7 @@ import com.bni.sifipdemo.ui.components.BniSecondaryButton
 import com.bni.sifipdemo.ui.components.FraudGauge
 import com.bni.sifipdemo.ui.components.FraudReasons
 import com.bni.sifipdemo.ui.components.WaveBottomShape
-import com.bni.sifipdemo.ui.dashboard.formatXofPublic
+import com.bni.sifipdemo.ui.dashboard.formatMgaPublic
 import com.bni.sifipdemo.ui.theme.BniBorder
 import com.bni.sifipdemo.ui.theme.BniGreen
 import com.bni.sifipdemo.ui.theme.BniGreenDeep
@@ -267,7 +267,7 @@ private fun ResultState(
                     letterSpacing = 1.sp,
                 )
                 Text(
-                    text = "Montant : ${formatXofPublic(amount)} XOF",
+                    text = "Montant : ${formatMgaPublic(amount)} MGA",
                     style = MaterialTheme.typography.bodyMedium,
                     color = BniGreenDeep.copy(alpha = 0.8f),
                 )

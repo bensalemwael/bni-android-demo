@@ -13,8 +13,8 @@ import com.bni.sifipdemo.R
 
 /**
  * BNI wordmark placeholder. The drawable resource is a generic vector
- * stand-in — replace `res/drawable/bni_logo.xml` by the official BNI Côte
- * d'Ivoire logo (PNG / SVG) received from the bank's communication team
+ * stand-in — replace `res/drawable/bni_logo.xml` by the official BNI
+ * Madagascar logo (PNG / SVG) received from the bank's communication team
  * without changing any composable code.
  */
 @Composable
@@ -26,7 +26,7 @@ fun BniLogo(
     Box(modifier = modifier.width(width).height(height)) {
         Image(
             painter = painterResource(id = R.drawable.bni_logo),
-            contentDescription = "BNI Côte d'Ivoire",
+            contentDescription = "BNI Madagascar",
         )
     }
 }

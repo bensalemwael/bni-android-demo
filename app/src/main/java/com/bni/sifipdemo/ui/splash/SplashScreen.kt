@@ -55,7 +55,7 @@ fun SplashScreen(onTimeout: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(20.dp))
             Text(
-                text = "CÔTE D'IVOIRE",
+                text = "MADAGASCAR",
                 color = Color.White,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.SemiBold,

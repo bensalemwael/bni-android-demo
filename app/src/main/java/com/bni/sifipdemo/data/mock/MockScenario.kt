@@ -10,13 +10,10 @@ package com.bni.sifipdemo.data.mock
 enum class MockScenario(val label: String) {
     /**
      * Login checks OK. Fraud score depends on the transfer amount:
-     *  - ≤ 1 000 000 FCFA → score 12 %, virement autorisé
-     *  - >  1 000 000 FCFA → score 76 %, virement bloqué
-     *
-     * Scénario par défaut : la banque démontre les deux issues en variant
-     * simplement le montant saisi.
+     *  - ≤ 1 000 000 MGA → score 12 %, virement autorisé
+     *  - >  1 000 000 MGA → score 76 %, virement bloqué
      */
-    ALL_OK("Par défaut (score selon montant, seuil 1 000 000 FCFA)"),
+    ALL_OK("Par défaut (score selon montant, seuil 1 000 000 MGA)"),
 
     /** Number-verify fails (e.g. user typed the wrong MSISDN). */
     FAIL_NUMBER_VERIFY("Échec Vérification réseau mobile"),

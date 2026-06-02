@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Placeholder wordmark — typographie générique sur fond vert avec accent
-    orange. Ce fichier est volontairement simple et différent du logo
-    officiel BNI ; il sera remplacé par le logo officiel (PNG/SVG) avant
-    toute diffusion externe.
+    orange. À remplacer par le logo officiel BNI Madagascar avant toute
+    diffusion externe.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="240dp"
@@ -36,14 +35,23 @@
         android:pathData="M100,28 L108,28 L108,60 L100,60 Z"
         android:fillColor="#FFFFFF" />
 
-    <!-- Texte secondaire à droite (générique) -->
+    <!-- Vertical separator -->
     <path
-        android:pathData="M132,32 L226,32 L226,36 L132,36 Z"
-        android:fillColor="#00A551" />
-    <path
-        android:pathData="M132,42 L210,42 L210,46 L132,46 Z"
+        android:pathData="M148,18 L150,18 L150,62 L148,62 Z"
         android:fillColor="#F7941D" />
+
+    <!-- M -->
     <path
-        android:pathData="M132,52 L226,52 L226,56 L132,56 Z"
+        android:pathData="M158,28 L166,28 L174,46 L182,28 L190,28 L190,60 L184,60 L184,40 L177,56 L171,56 L164,40 L164,60 L158,60 Z"
         android:fillColor="#00A551" />
+
+    <!-- G -->
+    <path
+        android:pathData="M198,40 C198,32 204,28 212,28 C220,28 224,32 226,38 L220,40 C219,37 217,35 213,35 C209,35 206,39 206,44 C206,49 209,53 213,53 C217,53 219,51 220,48 L226,50 C224,56 220,60 213,60 C204,60 198,54 198,46 Z M213,44 L213,48 L221,48 L221,44 Z"
+        android:fillColor="#00A551" />
+
+    <!-- Red horizontal underline accent -->
+    <path
+        android:pathData="M16,70 L226,70 L226,74 L16,74 Z"
+        android:fillColor="#F7941D" />
 </vector>

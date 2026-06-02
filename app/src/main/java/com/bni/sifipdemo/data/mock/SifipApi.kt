@@ -24,6 +24,6 @@ interface SifipApi {
     suspend fun scoreFraud(
         msisdn: String,
         recipientIban: String,
-        amountXof: Long,
+        amountMga: Long,
     ): FraudScoreResponse
 }

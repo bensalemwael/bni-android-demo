@@ -1,8 +1,8 @@
-# BNI Côte d'Ivoire × SIFIP — Android Demo
+# BNI Madagascar × SIFIP — Android Demo
 
 Application Android native (Kotlin + Jetpack Compose + Material 3) de **démonstration
 bancaire** destinée à être présentée à la **BNI (Banque Nationale d'Investissement) —
-Côte d'Ivoire — bni.ci**.
+Madagascar**.
 
 Elle simule un parcours bancaire sécurisé intégrant les APIs SIFIP **en mode mock** :
 
@@ -59,12 +59,12 @@ les réponses des 4 APIs et est commutable de **trois façons** :
 
 ### 3.1 Au runtime (recommandé pour la démo live)
 
-Dans le bandeau navy de l'écran de **Login**, un menu déroulant permet de basculer
+Dans le bandeau vert de l'écran de **Login**, un menu déroulant permet de basculer
 instantanément vers :
 
 | Scénario              | Effet                                                                                  |
 | :-------------------- | :------------------------------------------------------------------------------------- |
-| `ALL_OK` (défaut)     | Login ✅ + score fraude basé sur le montant : ≤ 1 000 000 FCFA → 12 % OK, > → 76 % bloqué |
+| `ALL_OK` (défaut)     | Login ✅ + score fraude basé sur le montant : ≤ 1 000 000 MGA → 12 % OK, > → 76 % bloqué |
 | `FAIL_NUMBER_VERIFY`  | Vérification réseau mobile ❌ → login bloqué dès l'étape 1                              |
 | `FAIL_SIM_SWAP`       | Vérification ligne mobile ❌ (changement SIM récent détecté)                            |
 | `FAIL_DEVICE_SWAP`    | Vérification Smartphone ❌ (appareil inconnu)                                           |
@@ -101,14 +101,15 @@ app/
 │   │   ├── SifipMockService.kt  ← implémentation locale (à remplacer par Retrofit)
 │   │   └── MockScenario.kt
 │   └── repository/
-│       └── BankRepository.kt    ← données mock du dashboard (FCFA, contexte ivoirien)
+│       └── BankRepository.kt    ← données mock du dashboard (MGA, contexte malgache)
 └── ui/
-    ├── splash/                  ← Splash écran (logo BNI)
+    ├── splash/                  ← Splash écran (logo BNI sur fond vert)
     ├── login/                   ← 4 SIFIP checks animés (3 vérif + autorisation)
-    ├── dashboard/               ← Solde FCFA + transactions + bouton virement
+    ├── dashboard/               ← Wallet card + 2 pill buttons + grid 3×2 d'actions + bottom nav
     ├── transfer/                ← Formulaire + jauge fraud score IA
-    ├── components/              ← BniButton, CheckStepRow, FraudGauge, BniLogo
-    └── theme/                   ← Couleurs BNI navy/gold, Material 3
+    ├── components/              ← BniButton, CheckStepRow, FraudGauge, BniLogo,
+    │                              ActionTile, BniBottomNav, WaveBottomShape
+    └── theme/                   ← Couleurs BNI vert/orange, Material 3
 ```
 
 **Pattern** : MVVM + StateFlow (Compose). Chaque ViewModel expose un seul
@@ -116,18 +117,28 @@ app/
 
 ## 5. Identité visuelle BNI
 
-| Couleur          | Hex        | Usage                          |
-| :--------------- | :--------- | :----------------------------- |
-| BNI Navy         | `#1A3668`  | Header, primary color          |
-| BNI Navy Dark    | `#0E1F45`  | Gradient header / status bar   |
-| BNI Gold         | `#F2B544`  | Accents, secondary color       |
-| BNI Gold Dark    | `#C99524`  | Tertiary, badges               |
+| Couleur          | Hex        | Usage                                          |
+| :--------------- | :--------- | :--------------------------------------------- |
+| BNI Green        | `#00A551`  | Header, primary color, accents principaux      |
+| BNI Green Dark   | `#007038`  | Pill buttons (Mes mouvements / bénéficiaires)  |
+| BNI Green Deep   | `#006B3C`  | Titres en accent foncé                         |
+| BNI Green Light  | `#D1EAD9`  | Fond des cercles d'icônes (ActionTile)         |
+| BNI Orange       | `#F7941D`  | Bande diagonale du logo, accents secondaires   |
 
 Le logo livré dans `res/drawable/bni_logo.xml` est un **placeholder
-typographique générique** (B/N/I sur fond navy + accent doré). Pour
-utiliser le logo officiel BNI, **remplacez ce fichier** par le SVG converti
-via Android Studio (*New → Vector Asset*) ou par un PNG `bni_logo.png`
+typographique générique** (B/N/I + séparateur orange + M/G sur fond vert). Pour
+utiliser le logo officiel BNI Madagascar, **remplacez ce fichier** par le SVG
+converti via Android Studio (*New → Vector Asset*) ou par un PNG `bni_logo.png`
 dans `res/drawable-xxhdpi/`. Aucune autre modification de code n'est requise.
+
+### Éléments visuels distinctifs
+
+- **WaveBottomShape** : forme avec vague concave en bas des bandeaux verts
+  (Login, Transfer, Dashboard)
+- **ActionTile** : carte blanche + cercle vert clair + icône verte + libellé
+- **BniBottomNav** : barre du bas avec 4 onglets (Accueil / Consultations /
+  Opérations / Gestion)
+- **Wallet card translucide** dans le header vert avec solde et compte
 
 ## 6. Brancher la vraie API SIFIP
 
@@ -158,9 +169,9 @@ POST /fraud-engine/score                 scope: sifip:fraud-engine
 
 ## 7. Conseils pour la démo en clientèle
 
-1. **Parcours nominal** : login en `ALL_OK`, virement à **250 000 FCFA** → score
+1. **Parcours nominal** : login en `ALL_OK`, virement à **250 000 MGA** → score
    **12 %** ✅, virement autorisé.
-2. **Blocage par montant** : refaire un virement à **2 000 000 FCFA** → score
+2. **Blocage par montant** : refaire un virement à **2 000 000 MGA** → score
    **76 %** ❌, transaction bloquée (sans changer de scénario, juste le montant).
 3. **Blocage explicite** : passer en `FAIL_FRAUD`, n'importe quel montant → score
    **87 %** ❌.
@@ -169,6 +180,14 @@ POST /fraud-engine/score                 scope: sifip:fraud-engine
 5. Le délai artificiel (≈ 500 ms par appel) est volontaire pour que les
    animations soient visibles à l'œil nu.
 
-## 8. Licence
+## 8. Contexte malgache
+
+- Devise : **MGA** (Ariary)
+- Format téléphone : **+261 32/33/34/38** suivi de 7 chiffres
+- Format IBAN : **MG46 0000 …** (24 caractères)
+- Utilitaires courants dans le mock : JIRAMA (eau & électricité), Telma Mobile
+  Money, STAR Madagascar (brasserie locale)
+
+## 9. Licence
 
 Code propriétaire — usage **démo BNI uniquement**. Ne pas distribuer.

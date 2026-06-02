@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BNI CI × SIFIP</string>
+    <string name="app_name">BNI Madagascar × SIFIP</string>
     <string name="splash_tagline">Banque numérique sécurisée</string>
 
     <!-- Login -->
     <string name="login_welcome">Bienvenue</string>
     <string name="login_subtitle">Connectez-vous à votre espace BNI</string>
     <string name="login_phone_label">Numéro de téléphone</string>
-    <string name="login_phone_hint">+225 07 12 34 56 78</string>
+    <string name="login_phone_hint">+261 32 12 345 67</string>
     <string name="login_button">Se connecter avec SIFIP</string>
     <string name="login_retry">Réessayer</string>
     <string name="login_scenario_label">Scénario démo (caché)</string>
@@ -34,7 +34,7 @@
     <string name="transfer_title">Nouveau virement</string>
     <string name="transfer_recipient">Bénéficiaire</string>
     <string name="transfer_iban">IBAN / RIB</string>
-    <string name="transfer_amount">Montant (FCFA)</string>
+    <string name="transfer_amount">Montant (MGA)</string>
     <string name="transfer_send">Valider le virement</string>
     <string name="transfer_analyzing">Analyse anti-fraude SIFIP en cours…</string>
     <string name="transfer_approved">Virement autorisé</string>

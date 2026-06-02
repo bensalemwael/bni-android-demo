@@ -31,7 +31,7 @@ import com.bni.sifipdemo.ui.theme.BniText
 /**
  * Tuile d'action de la grille du dashboard : carte blanche avec un
  * disque vert clair contenant une icône verte, libellé en dessous.
- * Style BNI Côte d'Ivoire (cercle vert clair, label vert foncé).
+ * Style BNI Madagascar (cercle vert clair, label vert foncé).
  */
 @Composable
 fun ActionTile(

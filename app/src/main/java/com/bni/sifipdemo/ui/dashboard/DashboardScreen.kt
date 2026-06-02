@@ -106,7 +106,7 @@ fun DashboardScreen(
                     HeaderTopBar(holderName = account.holder, onLogout = onLogout)
                     WalletCard(
                         accountSuffix = account.accountNumberMasked,
-                        balanceXof = account.balanceXof,
+                        balanceMga = account.balanceMga,
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     PillRow(onTransferClicked)
@@ -201,7 +201,7 @@ private fun HeaderTopBar(holderName: String, onLogout: () -> Unit) {
 }
 
 @Composable
-private fun WalletCard(accountSuffix: String, balanceXof: Long) {
+private fun WalletCard(accountSuffix: String, balanceMga: Long) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -255,7 +255,7 @@ private fun WalletCard(accountSuffix: String, balanceXof: Long) {
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "${formatXof(balanceXof)} XOF",
+                    text = "${formatMga(balanceMga)} MGA",
                     color = Color.White,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
@@ -329,7 +329,7 @@ private fun ActionGrid(onTransferClicked: () -> Unit) {
 
 @Composable
 private fun TransactionRow(tx: Transaction) {
-    val credit = tx.amountXof >= 0
+    val credit = tx.amountMga >= 0
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -367,7 +367,7 @@ private fun TransactionRow(tx: Transaction) {
             )
         }
         Text(
-            text = "${if (credit) "+" else "-"}${formatXof(kotlin.math.abs(tx.amountXof))} XOF",
+            text = "${if (credit) "+" else "-"}${formatMga(kotlin.math.abs(tx.amountMga))} MGA",
             color = if (credit) StatusOk else StatusError,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold,
@@ -375,9 +375,9 @@ private fun TransactionRow(tx: Transaction) {
     }
 }
 
-private fun formatXof(amount: Long): String {
+private fun formatMga(amount: Long): String {
     val nf = NumberFormat.getInstance(Locale.FRANCE)
     return nf.format(amount)
 }
 
-internal fun formatXofPublic(amount: Long): String = formatXof(amount)
+internal fun formatMgaPublic(amount: Long): String = formatMga(amount)

@@ -25,7 +25,7 @@ data class CheckState(
 enum class LoginPhase { Idle, Running, Success, Failure }
 
 data class LoginUiState(
-    val phoneNumber: String = "+225 07 12 34 56 78",
+    val phoneNumber: String = "+261 32 12 345 67",
     val phase: LoginPhase = LoginPhase.Idle,
     val numberVerify: CheckState = CheckState(
         name = "Vérification réseau mobile",
@@ -178,7 +178,7 @@ class LoginViewModel(
     }
 
     private companion object {
-        const val DEMO_DEVICE_ID = "samsung-galaxy-DEMO-CI-A1B2C3"
+        const val DEMO_DEVICE_ID = "samsung-galaxy-DEMO-MG-A1B2C3"
         const val AUTHORIZATION_LATENCY_MS = 350L
     }
 }

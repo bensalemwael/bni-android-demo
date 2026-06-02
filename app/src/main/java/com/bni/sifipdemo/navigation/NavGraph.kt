@@ -65,7 +65,7 @@ fun BniNavGraph() {
             val vm: TransferViewModel = viewModel(
                 factory = TransferViewModelFactory(
                     app = app,
-                    msisdn = "+225071234567",
+                    msisdn = "+261321234567",
                 ),
             )
             TransferScreen(

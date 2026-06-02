@@ -73,11 +73,10 @@ class SifipMockService(initial: MockScenario = MockScenario.ALL_OK) : SifipApi {
     override suspend fun scoreFraud(
         msisdn: String,
         recipientIban: String,
-        amountXof: Long,
+        amountMga: Long,
     ): FraudScoreResponse {
         delay(FRAUD_SCORE_LATENCY_MS)
 
-        // FAIL_FRAUD forces a high score regardless of amount.
         if (_scenario.value == MockScenario.FAIL_FRAUD) {
             return FraudScoreResponse(
                 score = 87,
@@ -92,10 +91,7 @@ class SifipMockService(initial: MockScenario = MockScenario.ALL_OK) : SifipApi {
             )
         }
 
-        // For every other scenario the fraud score depends on the amount,
-        // so the bank can demo both outcomes in one go just by changing the
-        // amount entered on the form.
-        return if (amountXof > AMOUNT_FRAUD_THRESHOLD_XOF) {
+        return if (amountMga > AMOUNT_FRAUD_THRESHOLD_MGA) {
             FraudScoreResponse(
                 score = 76,
                 decision = FraudDecision.REJECT,
@@ -103,7 +99,7 @@ class SifipMockService(initial: MockScenario = MockScenario.ALL_OK) : SifipApi {
                     "Authentification comportementale : OK",
                     "Vérification historique : montant inhabituel pour ce profil",
                     "Bénéficiaire connu",
-                    "Montant > seuil critique (1 000 000 FCFA)",
+                    "Montant > seuil critique (1 000 000 MGA)",
                 ),
             )
         } else {
@@ -127,6 +123,6 @@ class SifipMockService(initial: MockScenario = MockScenario.ALL_OK) : SifipApi {
         const val FRAUD_SCORE_LATENCY_MS = 900L
 
         /** Threshold for the amount-based fraud logic (≤ → OK, > → blocked). */
-        const val AMOUNT_FRAUD_THRESHOLD_XOF = 1_000_000L
+        const val AMOUNT_FRAUD_THRESHOLD_MGA = 1_000_000L
     }
 }

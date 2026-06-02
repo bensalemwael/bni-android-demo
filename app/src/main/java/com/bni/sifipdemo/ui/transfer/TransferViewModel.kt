@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 enum class TransferPhase { Form, Analyzing, Approved, Rejected }
 
 data class TransferUiState(
-    val recipient: String = "Aminata Touré",
-    val iban: String = "CI93 CI121 01234 567890123 456",
+    val recipient: String = "Mialy Rakotomalala",
+    val iban: String = "MG46 0000 5012 3456 7890 12",
     val amountText: String = "250000",
     val phase: TransferPhase = TransferPhase.Form,
     val result: FraudScoreResponse? = null,
@@ -47,7 +47,7 @@ class TransferViewModel(
             val res = sifipApi.scoreFraud(
                 msisdn = userMsisdn,
                 recipientIban = _state.value.iban,
-                amountXof = amount,
+                amountMga = amount,
             )
             val phase = when (res.decision) {
                 FraudDecision.APPROVE, FraudDecision.REVIEW -> TransferPhase.Approved
